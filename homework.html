@@ -78,12 +78,29 @@
             }
 
         </style>
+        <script>
+            // 실시간 날씨
+            $(document).ready(function () {
+                $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                data: {},
+                success: function (response) {
+                  let today_temp = response['temp']
+
+                  $('#temp').text(today_temp)
+                }
+
+            })
+            });
+        </script>
 
     </head>
 
     <body>
     <div class="mytitle">
         <h1>NCT 팬명록</h1>
+        <p> 현재 기온 : <span id = "temp">00.00</span>도</p>
     </div>
     <div class="mypost">
         <div class="form-floating mb-3">
