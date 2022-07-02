@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+        .mytitle{
+            background-color: green;
+
+            width: 100%;
+            height: 250px;
+
+            /*항상 3줄*/
+            /*배경어둡게하기 linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))*/
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg");
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+
+            /*항상 4줄 정렬하기*/
+            display: flex;
+            flex-direction: column; /*세로로 나타내기 가로는 row*/
+            justify-content: center;
+            align-items: center;
+
+
+        }
+        .mytitle > button {
+            width: 200px;
+            height: 50px;
+
+            background-color: transparent;
+            color: white;
+            border-radius: 50px;
+
+            border: 1px solid white;
+
+            margin-top: 10px;
+        }
+        .mytitle > button:hover{ /*마우스가 버튼에 다가 갔을 때*/
+            border: 2px solid white;
+        }
+        .mycomment {
+            color: gray;
+
+        }
+        .wrap{
+            max-width: 1200px;
+            width: 95%;
+            margin: 20px auto 0px auto;
+
+        }
+        .mypost {
+
+            max-width: 500px;
+            width: 95%;
+            margin: 20px auto 0px auto;
+
+            box-shadow: 0px 0px 3px 0px gray;
+            padding: 20px;
+
+        }
+        .mybtn {
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            margin-top: 10px;
+        }
+
+        .mybtn > button{
+            margin-right: 10px;
+        }
+    </style>
+
+    <script>
+        // 함수 function : 정해진 것을 하는 것
+        // 정해진 값을 주는 것
+        // alret() => 팝업창
+        /* 서울시 미세먼지*/
+        let mise_list = [
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "도심권",
+                MSRSTE_NM: "중구",
+                PM10: 22,
+                PM25: 14,
+                O3: 0.018,
+                NO2: 0.015,
+                CO: 0.4,
+                SO2: 0.002,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 31,
+                ARPLT_MAIN: "O3",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "도심권",
+                MSRSTE_NM: "종로구",
+                PM10: 24,
+                PM25: 18,
+                O3: 0.013,
+                NO2: 0.016,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 39,
+                ARPLT_MAIN: "PM25",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "도심권",
+                MSRSTE_NM: "용산구",
+                PM10: 0,
+                PM25: 15,
+                O3: 0.012,
+                NO2: 0.027,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "점검중",
+                IDEX_MVL: -99,
+                ARPLT_MAIN: "점검중",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서북권",
+                MSRSTE_NM: "은평구",
+                PM10: 36,
+                PM25: 14,
+                O3: 0.019,
+                NO2: 0.018,
+                CO: 0.5,
+                SO2: 0.005,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 42,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서북권",
+                MSRSTE_NM: "서대문구",
+                PM10: 28,
+                PM25: 9,
+                O3: 0.018,
+                NO2: 0.015,
+                CO: 0.6,
+                SO2: 0.004,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 37,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서북권",
+                MSRSTE_NM: "마포구",
+                PM10: 26,
+                PM25: 8,
+                O3: 0.012,
+                NO2: 0.021,
+                CO: 0.5,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 36,
+                ARPLT_MAIN: "NO2",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "광진구",
+                PM10: 17,
+                PM25: 9,
+                O3: 0.018,
+                NO2: 0.016,
+                CO: 0.6,
+                SO2: 0.001,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 31,
+                ARPLT_MAIN: "O3",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "성동구",
+                PM10: 21,
+                PM25: 12,
+                O3: 0.018,
+                NO2: 0.017,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 33,
+                ARPLT_MAIN: "PM25",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "중랑구",
+                PM10: 27,
+                PM25: 10,
+                O3: 0.015,
+                NO2: 0.019,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 34,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "동대문구",
+                PM10: 26,
+                PM25: 9,
+                O3: 0.016,
+                NO2: 0.017,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 34,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "성북구",
+                PM10: 27,
+                PM25: 8,
+                O3: 0.022,
+                NO2: 0.014,
+                CO: 0.5,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 37,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "도봉구",
+                PM10: 25,
+                PM25: 12,
+                O3: 0.024,
+                NO2: 0.011,
+                CO: 0.3,
+                SO2: 0.002,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 41,
+                ARPLT_MAIN: "O3",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "강북구",
+                PM10: 30,
+                PM25: 15,
+                O3: 0.022,
+                NO2: 0.02,
+                CO: 0.4,
+                SO2: 0.002,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 39,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동북권",
+                MSRSTE_NM: "노원구",
+                PM10: 21,
+                PM25: 14,
+                O3: 0.017,
+                NO2: 0.016,
+                CO: 0.4,
+                SO2: 0.004,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 36,
+                ARPLT_MAIN: "PM25",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "강서구",
+                PM10: 36,
+                PM25: 16,
+                O3: 0.021,
+                NO2: 0.013,
+                CO: 0.4,
+                SO2: 0.004,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 42,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "구로구",
+                PM10: 23,
+                PM25: 10,
+                O3: 0.022,
+                NO2: 0.016,
+                CO: 0.3,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 37,
+                ARPLT_MAIN: "O3",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "영등포구",
+                PM10: 29,
+                PM25: 15,
+                O3: 0.01,
+                NO2: 0.022,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 41,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "동작구",
+                PM10: 29,
+                PM25: 15,
+                O3: 0.012,
+                NO2: 0.023,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 41,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "관악구",
+                PM10: 27,
+                PM25: 12,
+                O3: 0.012,
+                NO2: 0.022,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 37,
+                ARPLT_MAIN: "NO2",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "금천구",
+                PM10: 25,
+                PM25: 15,
+                O3: 0.015,
+                NO2: 0.02,
+                CO: 0.4,
+                SO2: 0.004,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 43,
+                ARPLT_MAIN: "PM25",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "서남권",
+                MSRSTE_NM: "양천구",
+                PM10: 0,
+                PM25: 14,
+                O3: 0.016,
+                NO2: 0.017,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "점검중",
+                IDEX_MVL: -99,
+                ARPLT_MAIN: "점검중",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동남권",
+                MSRSTE_NM: "강남구",
+                PM10: 31,
+                PM25: 16,
+                O3: 0.018,
+                NO2: 0.018,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 39,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동남권",
+                MSRSTE_NM: "서초구",
+                PM10: 34,
+                PM25: 13,
+                O3: 0.024,
+                NO2: 0.019,
+                CO: 0.3,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 41,
+                ARPLT_MAIN: "PM10",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동남권",
+                MSRSTE_NM: "송파구",
+                PM10: 25,
+                PM25: 6,
+                O3: 0.014,
+                NO2: 0.025,
+                CO: 0.4,
+                SO2: 0.003,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 42,
+                ARPLT_MAIN: "NO2",
+            },
+            {
+                MSRDT: "201912052100",
+                MSRRGN_NM: "동남권",
+                MSRSTE_NM: "강동구",
+                PM10: 24,
+                PM25: 14,
+                O3: 0.016,
+                NO2: 0.02,
+                CO: 0.4,
+                SO2: 0.002,
+                IDEX_NM: "좋음",
+                IDEX_MVL: 39,
+                ARPLT_MAIN: "PM25",
+            },
+        ];
+
+        for (let i = 0; i < mise_list.length; i++) {
+            if (mise_list[i]['IDEX_MVL']< 40){
+                console.log(mise_list[i]['MSRSTE_NM'])
+            }
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>내 생애 최고의 영화들</h1>
+        <button>영화 기록하기🔥</button>
+
+    </div>
+
+    <div class="mypost">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">영화URL</label>
+
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">별점</label>
+            <select class="form-select" id="inputGroupSelect01">
+                <option selected>--선택하기--</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                      style="height: 100px"></textarea>
+            <label for="floatingTextarea2">코멘트</label>
+        </div>
+
+        <div class="mybtn">
+            <button type="button" class="btn btn-dark">기록하기</button>
+            <button type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+
+    </div>
+    <div class="wrap">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">여기에 제목이 들어갑니다</h5>
+                        <p class="card-text">여기엔 내용이 들어갑니다</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">여기에 코멘트가 들어갑니다</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">여기에 제목이 들어갑니다</h5>
+                        <p class="card-text">여기엔 내용이 들어갑니다</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">여기에 코멘트가 들어갑니다</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">여기에 제목이 들어갑니다</h5>
+                        <p class="card-text">여기엔 내용이 들어갑니다</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">여기에 코멘트가 들어갑니다</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">여기에 제목이 들어갑니다</h5>
+                        <p class="card-text">여기엔 내용이 들어갑니다</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">여기에 코멘트가 들어갑니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
